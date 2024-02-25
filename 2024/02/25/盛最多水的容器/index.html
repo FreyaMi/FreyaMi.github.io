@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf8"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <title>
+      
+        盛最多水的容器 | Freya的学习笔记
+      
+    </title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    
+      <link rel="apple-touch-icon"
+            sizes="180x180"
+            href="/images/apple-touch-icon.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/images/favicon-32x32.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/images/favicon-16x16.png"/>
+    
+    
+      <link rel="mask-icon"
+            href="/images/logo.svg"
+            color=""/>
+    
+    
+    
+      
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/regular.ttf);
+        font-weight: regular;
+    }
+  </style>
+
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/bold.ttf);
+        font-weight: bold;
+    }
+  </style>
+
+
+    
+    <link rel="stylesheet"
+          type="text/css"
+          href='/css/layout.css'/>
+    
+    
+  <link rel="stylesheet" type="text/css" href="/css/post.css" />
+  
+
+  <meta name="generator" content="Hexo 7.0.0"></head>
+  <body>
+    <div class="head">
+      <div class="nav">
+        <a href='/' class="nav-logo">
+          <img alt="logo" height="60px" width="60px" src="/images/logo.svg"/>
+        </a>
+        <input id="navBtn" type="checkbox"/>
+        <div class="nav-menu">
+          
+            
+              <a class="nav-menu-item" href="/algorithm">数据结构与算法</a>
+            
+              <a class="nav-menu-item" href="/readingNotes">读书笔记</a>
+            
+              <a class="nav-menu-item" href="/grocery">杂货店</a>
+            
+          
+          
+        </div>
+        <label class="nav-btn" for="navBtn"></label>
+      </div>
+    </div>
+    <div class="body">
+      
+  <article class="post-content">
+    <div class="post-inner">
+      <div class="post-content__head">
+        <div class="post-title">盛最多水的容器</div>
+        <div class="post-info">
+          
+  <a href="/tags/%E6%95%B0%E7%BB%84/" class="post-tag">#数组</a><a href="/tags/%E8%B4%AA%E5%BF%83/" class="post-tag">#贪心</a><a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" class="post-tag">#双指针</a>
+
+
+          <span class="post-date">2024-02-25</span>
+        </div>
+      </div>
+      
+      <div class="post-content__body">
+        
+          <div class="post-gallery">
+            
+          </div>
+        
+        <p>平台：LeetCode<br>题号：11<br>标签：贪心 数组 双指针</p>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给定一个长度为<code>n</code>的整数数组<code>height</code>。有<code>n</code>条垂线，第<code>i</code>条线的两个端点是<code>(i, 0)</code>和<code>(i, height[i])</code>。<br>找出其中的两条线，使得它们与<code>x</code>轴共同构成的容器可以容纳最多的水。<br>返回容器可以储存的最大水量。<br><strong>说明</strong>：你不能倾斜容器。</p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h4><p><img src="/2024/02/25/%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/question_11.jpg" alt="示例"></p>
+<blockquote>
+<p><strong>输入：</strong>[1,8,6,2,5,4,8,3,7]<br><strong>输出：</strong>49<br><strong>解释：</strong>图中垂直线代表输入数组 [1,8,6,2,5,4,8,3,7]。在此情况下，容器能够容纳水（表示为蓝色部分）的最大值为 49。</p>
+</blockquote>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h4><blockquote>
+<p><strong>输入：</strong>height &#x3D; [1,1]<br><strong>输出：</strong>1</p>
+</blockquote>
+<h4 id="提示："><a href="#提示：" class="headerlink" title="提示："></a>提示：</h4><ul>
+<li><code>n == height.length</code></li>
+<li><code>2 &lt;= n &lt;= 105</code></li>
+<li><code>0 &lt;= height[i] &lt;= 104</code></li>
+</ul>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>看到题目时，想到的最简单的方法就是两个循环，暴力计算。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[]</span>&#125; <span class="hljs-variable">height</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> maxArea = <span class="hljs-keyword">function</span>(<span class="hljs-params">height</span>) &#123;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; height.<span class="hljs-property">length</span>; i ++) &#123;<br>        <span class="hljs-keyword">let</span> j = i + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">while</span>(j &lt; height.<span class="hljs-property">length</span>) &#123;<br>            result = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(<span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(height[i], height[j]) * (j - i), result);<br>            j ++;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<p>这种方法在使用示例做测试时是可以通过的，但是时间复杂度为O(n<sup>2</sup>)。一旦数据量很大，就会因为<code>超过时间限制</code>而提交失败。<br>换一种思路解决这个问题，使用双指针，在数组两边对指针进行移动。<br>设两个指针分别为i和j，指向水槽的高度分别为height[i]和height[j]。水槽的高度为height[i]和height[j]中短的一方，宽度为i和j之间的长度，即j - i。<br><img src="/2024/02/25/%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/step1.png"><br>比较两条高的长度，短的一边进行移动。当i &#x3D;&#x3D;&#x3D; j时，宽为0，所有以每个height值为边界的容积都计算完成，最大的就是最终的答案。</p>
+<blockquote>
+<p>假设短的一边为height[j]。我们保持右指针j不变，无论左指针的所指向的长度为多少，都水槽的高都不会大于height[j]。水槽的宽最长就为(j - i),水槽最大容量即为height[j] * (j - i)。</p>
+</blockquote>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs JavaScript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[]</span>&#125; <span class="hljs-variable">height</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> maxArea = <span class="hljs-keyword">function</span>(<span class="hljs-params">height</span>) &#123;<br>    <span class="hljs-keyword">let</span> result = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">let</span> j = height.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">while</span> (i &lt; j) &#123;<br>        <span class="hljs-keyword">let</span> h = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">min</span>(height[i], height[j]);<br>        result = <span class="hljs-title class_">Math</span>.<span class="hljs-title function_">max</span>(h * (j - i), result);<br>        <span class="hljs-keyword">if</span> (height[i] &lt; height[j]) &#123;<br>            i ++;<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            j --;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;;<br></code></pre></td></tr></table></figure>
+      </div>
+    </div>
+  </article>
+  <div class="post__foot">
+    
+    <div class="post-nav">
+  
+    <div class="post-nav-item-left"></div>
+  
+  <div class="vhr"></div>
+  
+    <a class="post-nav-item-right" href="/2024/01/25/%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E4%B9%98/">
+      <div class="text-align">
+        <span class="text-small">下一篇</span>
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             transform="scale(-1,-1)"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596"/>
+        </svg>
+      </div>
+      字符串相乘
+    </a>
+  
+</div>
+
+    
+      <div class="related-post">
+  <div class="related__head">
+  <a href="/tags/%E6%95%B0%E7%BB%84/" class="post-tag">#数组</a><a href="/tags/%E8%B4%AA%E5%BF%83/" class="post-tag">#贪心</a><a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" class="post-tag">#双指针</a>
+
+</div>
+  <div class="realated__body">
+    
+      <div class="null"><div class="null-item"><div class="null-title"><a href="\2024\01\14\最长公共前缀\" title="最长公共前缀" rel="bookmark">最长公共前缀</a></div></div><div class="null-item"><div class="null-title"><a href="\2024\01\15\隐藏个人信息\" title="隐藏个人信息" rel="bookmark">隐藏个人信息</a></div></div></div>
+    
+  </div>
+</div>
+
+    
+    
+  </div>
+
+    </div>
+    <div class="foot">
+      <div class="foot-inner">
+        <div class="foot__head">
+          
+            <div class="foot-line">
+              
+                <div class="matts">知</div>
+              
+                <div class="matts">行</div>
+              
+                <div class="matts">合</div>
+              
+                <div class="matts">一</div>
+              
+            </div>
+          
+        </div>
+        <div class="foot__body">
+          
+            <div class="foot-item">
+              <div class="foot-item__head">朋友</div>
+              <div class="foot-item__body">
+                
+                  <div class="text">
+                    <img alt="link" height="20px" width="20px" src="/images/icon/icon-link.svg"/>
+                    <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">Theme Tranquility</a>
+                  </div>
+                
+                <div class="text">
+                  <img alt="link" height="20px" width="20px" src="/images/icon/icon-link+.svg"/>
+                  <a class="foot-link"
+                     href="mailto:freyawang09@163.com?subject=%E7%94%B3%E8%AF%B7%20Hozen.site%20%E7%9A%84%E5%8F%8B%E9%93%BE%E4%BD%8D%E7%BD%AE">
+                  申请友链</a>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="foot-item">
+              <div class="foot-item__head">账号</div>
+              <div class="foot-item__body">
+                
+                  <div class="text">
+                    <img alt="link" height="20px" width="20px" src="/images/logo-github.svg"/>
+                    <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/freyawang09">freyawang09</a>
+                  </div>
+                
+              </div>
+            </div>
+          
+          <div class="foot-item">
+            <div class="foot-item__head">联系</div>
+            <div class="foot-item__body">
+              <div class="text">
+                <img alt="link" height="20px" width="20px" src="/images/icon/icon-email.svg"/>
+                <a class="foot-link" href="mailto:freyawang09@163.com">freyawang09@163.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+          <a href="https://freyawang09.github.io">Freya的学习笔记</a> &nbsp;|&nbsp;由&nbsp;<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>&nbsp;及&nbsp;
+          <svg width="20" height="20" viewBox="0 0 725 725">
+            <path fill-rule="evenodd" fill="rgb(221, 221, 221)" d="M145.870,236.632 L396.955,103.578 L431.292,419.44 L156.600,522.53 L145.870,236.632 Z"/>
+            <path fill-rule="evenodd" fill="rgb(159, 159, 159)" d="M396.955,103.578 L564.345,234.486 L611.558,513.469 L431.292,419.44 L396.955,103.578 Z"/>
+            <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M431.292,419.44 L611.558,513.469 L358.327,595.18 L156.600,522.53 L431.292,419.44 Z"/>
+          </svg>
+          <a target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">致远</a>&nbsp;驱动
+        </div>
+      </div>
+    </div>
+    
+    
+  
+
+  </body>
+</html>
