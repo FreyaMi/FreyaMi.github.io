@@ -5,7 +5,7 @@
     <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
     <title>
       
-        杂货店 | Freya的学习笔记
+        hexo部署github失败的解决方法 | Freya的学习笔记
       
     </title>
     <meta name="description" content=""/>
@@ -58,7 +58,8 @@
           href='/css/layout.css'/>
     
     
-  <link rel="stylesheet" type="text/css" href="/css/category.css" />
+  <link rel="stylesheet" type="text/css" href="/css/post.css" />
+  
 
   <meta name="generator" content="Hexo 7.0.0"></head>
   <body>
@@ -85,40 +86,81 @@
     </div>
     <div class="body">
       
-  <div class="wall wall-category--plain">
-    <div class="wall-main">
-      <div class="wall-category-title">
-        <div class="title-icon"
-             style="background-image: url(/images/icon/icon-event.svg)"></div>
-        杂货店
+  <article class="post-content">
+    <div class="post-inner">
+      <div class="post-content__head">
+        <div class="post-title">hexo部署github失败的解决方法</div>
+        <div class="post-info">
+          
+  <a href="/tags/hexo/" class="post-tag">#hexo</a>
+
+
+          <span class="post-date">2024-02-25</span>
+        </div>
       </div>
-      <div class="wall-category-description">零散的小甜点</div>
-      <div class="wall-category-tags">
-        <div id="tags-outer"><a href="/tags/hexo/" style="font-size: 1em;">hexo</a></div>
+      
+      <div class="post-content__body">
+        
+          <div class="post-gallery">
+            
+          </div>
+        
+        <p>有时hexo上的博客提交到github会遇到一直报错的问题。用到了两个解决方法，第一个解决方法解决不了的时候可以使用第二个再试试。</p>
+<h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p>先删除node_modules,可以使用rifram,<br>命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">rifram node_modules<br></code></pre></td></tr></table></figure>
+<p>删除不了的话需要安装rifram。如果还是删除失败的话可以手动删除。<br>然后清除缓存文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">hexo clean<br></code></pre></td></tr></table></figure>
+<p>linux系统用这个命令，windows系统在hexo前加npx（hexo的所有命令都要加）。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">hexo g<br></code></pre></td></tr></table></figure>
+<p>重新生成静态文件，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">hexo d<br></code></pre></td></tr></table></figure>
+<p>部署网站，现在可以查看命令窗口是否还会报错。如果不再报错，就说明提交github成功，过一会就可以看到个人网站的更新啦。</p>
+<h4 id="2"><a href="#2" class="headerlink" title="2"></a>2</h4><p>上述方法还有报错的话，就要考虑是不是代理出了问题。<br>直接网页登录github，正常。但是ping github.com时却连接不上，就是代理出了问题。<br>桌面右键 -&gt; 显示设置 -&gt; 网络和Internet -&gt; 代理 -&gt; 手动设置代码，查看代理使用的端口号。<br><img src="/2024/02/25/hexo%E9%83%A8%E7%BD%B2github%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/checkPort.png"><br>设置git的指定域名代理</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git config --global http.proxy http://127.0.0.1:9300 // 改为代理IP地址和端口<br>git config --global https.proxy http://127.0.0.1:9300<br></code></pre></td></tr></table></figure>
+<p>然后用查看命令，检查是否更改成功</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git config --global --get http.proxy<br>git config --global --get https.proxy<br></code></pre></td></tr></table></figure>
+<p>再次<code>hexo d</code>部署，查看是否成功。<br>下面的两个命令时取消git的指定域名代理使用的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">git config --global --unset http.proxy <br>git config --global --unset https.proxy<br></code></pre></td></tr></table></figure>
       </div>
     </div>
-  </div>
-  <div class="post-list">
+  </article>
+  <div class="post__foot">
     
-      
+    <div class="post-nav">
   
-  <div class="post-card">
-    <div class="post__head">
-      <a href="/2024/02/25/hexo%E9%83%A8%E7%BD%B2github%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/" class="post-title hover-line">hexo部署github失败的解决方法</a>
-      
-    </div>
-    <div class="post__body">
-      
-      <div class="post-excerpt"></div>
-    </div>
-    <div class="post__foot">
-      <div class="post-tags">
+    <div class="post-nav-item-left"></div>
+  
+  <div class="vhr"></div>
+  
+    <a class="post-nav-item-right" href="/2024/02/25/%E7%9B%9B%E6%9C%80%E5%A4%9A%E6%B0%B4%E7%9A%84%E5%AE%B9%E5%99%A8/">
+      <div class="text-align">
+        <span class="text-small">下一篇</span>
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             transform="scale(-1,-1)"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596"/>
+        </svg>
+      </div>
+      盛最多水的容器
+    </a>
+  
+</div>
+
+    
+      <div class="related-post">
+  <div class="related__head">
   <a href="/tags/hexo/" class="post-tag">#hexo</a>
 
 </div>
-    </div>
+  <div class="realated__body">
+    
+      
+    
   </div>
-
+</div>
 
     
     
