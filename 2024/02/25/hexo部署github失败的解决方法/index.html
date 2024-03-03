@@ -106,9 +106,9 @@
           </div>
         
         <p>有时hexo上的博客提交到github会遇到一直报错的问题。用到了两个解决方法，第一个解决方法解决不了的时候可以使用第二个再试试。</p>
-<h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p>先删除node_modules,可以使用rifram,<br>命令</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">rifram node_modules<br></code></pre></td></tr></table></figure>
-<p>删除不了的话需要安装rifram。如果还是删除失败的话可以手动删除。<br>然后清除缓存文件</p>
+<h4 id="1"><a href="#1" class="headerlink" title="1"></a>1</h4><p>先删除node_modules,可以使用rimraf,<br>命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">rimraf node_modules<br></code></pre></td></tr></table></figure>
+<p>删除不了的话需要安装rimraf。如果还是删除失败的话可以手动删除。<br>然后清除缓存文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">hexo clean<br></code></pre></td></tr></table></figure>
 <p>linux系统用这个命令，windows系统在hexo前加npx（hexo的所有命令都要加）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">hexo g<br></code></pre></td></tr></table></figure>
