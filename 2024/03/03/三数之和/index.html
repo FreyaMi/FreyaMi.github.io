@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf8"/>
+    <meta name="viewport" content="initial-scale=1.0, width=device-width"/>
+    <title>
+      
+        三数之和 | Freya的学习笔记
+      
+    </title>
+    <meta name="description" content=""/>
+    <meta name="keywords" content=""/>
+    
+      <link rel="apple-touch-icon"
+            sizes="180x180"
+            href="/images/apple-touch-icon.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/images/favicon-32x32.png"/>
+    
+    
+      <link rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="/images/favicon-16x16.png"/>
+    
+    
+      <link rel="mask-icon"
+            href="/images/logo.svg"
+            color=""/>
+    
+    
+    
+      
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/regular.ttf);
+        font-weight: regular;
+    }
+  </style>
+
+  <style>
+    @font-face {
+        font-family:sourceHanSerif;
+        src: url(/font/bold.ttf);
+        font-weight: bold;
+    }
+  </style>
+
+
+    
+    <link rel="stylesheet"
+          type="text/css"
+          href='/css/layout.css'/>
+    
+    
+  <link rel="stylesheet" type="text/css" href="/css/post.css" />
+  
+
+  <meta name="generator" content="Hexo 7.0.0"></head>
+  <body>
+    <div class="head">
+      <div class="nav">
+        <a href='/' class="nav-logo">
+          <img alt="logo" height="60px" width="60px" src="/images/logo.svg"/>
+        </a>
+        <input id="navBtn" type="checkbox"/>
+        <div class="nav-menu">
+          
+            
+              <a class="nav-menu-item" href="/algorithm">数据结构与算法</a>
+            
+              <a class="nav-menu-item" href="/readingNotes">读书笔记</a>
+            
+              <a class="nav-menu-item" href="/grocery">杂货店</a>
+            
+          
+          
+        </div>
+        <label class="nav-btn" for="navBtn"></label>
+      </div>
+    </div>
+    <div class="body">
+      
+  <article class="post-content">
+    <div class="post-inner">
+      <div class="post-content__head">
+        <div class="post-title">三数之和</div>
+        <div class="post-info">
+          
+  <a href="/tags/%E6%95%B0%E7%BB%84/" class="post-tag">#数组</a><a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" class="post-tag">#双指针</a>
+
+
+          <span class="post-date">2024-03-03</span>
+        </div>
+      </div>
+      
+      <div class="post-content__body">
+        
+          <div class="post-gallery">
+            
+          </div>
+        
+        <p>平台：LeetCode<br>题号：15<br>标签：数组 双指针 排序</p>
+<h3 id="题目描述"><a href="#题目描述" class="headerlink" title="题目描述"></a>题目描述</h3><p>给你一个整数数组<code>nums</code>，判断是否存在三元组<code>[nums[i], nums[j], nums[k]]</code>满足<code>i != j</code>、<code>i != k</code>且<code>j != k</code>，同时还满足<code>nums[i] + nums[j] + nums[k] == 0</code>。请<br>你返回所有和为 0 且不重复的三元组。<br><strong>注意：</strong>答案中不可以包含重复的三元组。</p>
+<h4 id="示例-1"><a href="#示例-1" class="headerlink" title="示例 1:"></a>示例 1:</h4><blockquote>
+<p><strong>输入：</strong>nums &#x3D; [-1,0,1,2,-1,-4]<br><strong>输出：</strong>[[-1,-1,2],[-1,0,1]]<br><strong>解释：</strong><br>nums[0] + nums[1] + nums[2] &#x3D; (-1) + 0 + 1 &#x3D; 0 。<br>nums[1] + nums[2] + nums[4] &#x3D; 0 + 1 + (-1) &#x3D; 0 。<br>nums[0] + nums[3] + nums[4] &#x3D; (-1) + 2 + (-1) &#x3D; 0 。<br>不同的三元组是 [-1,0,1] 和 [-1,-1,2] 。<br>注意，输出的顺序和三元组的顺序并不重要。</p>
+</blockquote>
+<h4 id="示例-2"><a href="#示例-2" class="headerlink" title="示例 2:"></a>示例 2:</h4><blockquote>
+<p><strong>输入：</strong>nums &#x3D; [0,1,1]<br><strong>输出：</strong>[]<br><strong>解释：</strong>唯一可能的三元组和不为 0 。</p>
+</blockquote>
+<h4 id="示例-3"><a href="#示例-3" class="headerlink" title="示例 3:"></a>示例 3:</h4><blockquote>
+<p><strong>输入：</strong>nums &#x3D; [0,0,0]<br><strong>输出：</strong>[[0,0,0]]<br><strong>解释：</strong>唯一可能的三元组和为 0 。</p>
+</blockquote>
+<h4 id="提示"><a href="#提示" class="headerlink" title="提示"></a>提示</h4><ul>
+<li><code>3 &lt;= nums.length &lt;= 3000</code></li>
+<li><code>-105 &lt;= nums[i] &lt;= 105</code></li>
+</ul>
+<h3 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h3><p>这道题用双指针法可以更高效的解决。<br><img src="/2024/03/03/%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/13-3sum.gif"><br>用示例一举例，首先把数组进行排序，然后下标i从0开始，左指针指向<code>i + 1</code>，右指针指向数组最后一个数据<code>nums.length - 1</code>。<br>对三数之和进行计算和比较。nums[i]记作a，nums[left]记作b，nums[right]记作c。<br>当<code>a + b + c &gt; 0</code>时，说明三数之和大了，要减小和，就要把右指针向左移动，减小c的值，<code>right--</code>。<br>同理，当<code>a + b + c &lt; 0</code>时，说明b值小了，左指针向右移动，加大三数之和，<code>left ++</code>。<br>当<code>a + b + c = 0</code>时，把结果存入result中。right和left同时向内收缩。<br><img src="/2024/03/03/%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/5.png"><br><img src="/2024/03/03/%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8C/6.png"><br><strong>注意：</strong>因为答案中不可以包含重复的三元组，我们先要对left和right进行去重。</p>
+<h4 id="对a的去重"><a href="#对a的去重" class="headerlink" title="对a的去重"></a>对a的去重</h4><p>为什么不用nums[i] &#x3D;&#x3D;&#x3D; nums[i + 1]去重？<br>因为这样会错过[-1, -1, 2]这样的值，不能有重复的三元组，但是三元组中的数据可以重复。而用<code>nums[i] === nums[i - 1]</code>进行去重，在nums[i - 1]时我们已经把对应的数据进行过计算和对比了，所以不会错过值。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> &#123;<span class="hljs-type">number[]</span>&#125; <span class="hljs-variable">nums</span></span><br><span class="hljs-comment"> * <span class="hljs-doctag">@return</span> &#123;<span class="hljs-type">number[][]</span>&#125;</span><br><span class="hljs-comment"> */</span><br><span class="hljs-keyword">var</span> threeSum = <span class="hljs-keyword">function</span>(<span class="hljs-params">nums</span>) &#123;<br>    <span class="hljs-keyword">if</span>(nums.<span class="hljs-property">lenth</span> &lt; <span class="hljs-number">3</span>) <span class="hljs-keyword">return</span> [];<br>    <span class="hljs-comment">// 排序</span><br>    nums.<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">a, b</span>) =&gt;</span> a - b);<br>    <span class="hljs-keyword">const</span> result = [];<br><br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>; i &lt; nums.<span class="hljs-property">length</span>; i ++) &#123;<br>        <span class="hljs-comment">// 排序之后的第一个数值nums[i]大于0，那么它的任何组合之和都会大于0</span><br>        <span class="hljs-keyword">if</span> (nums[i] &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">return</span> result;<br>        &#125;<br><br>        <span class="hljs-keyword">let</span> left = i + <span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">let</span> right = nums.<span class="hljs-property">length</span> - <span class="hljs-number">1</span>;<br><br>        <span class="hljs-comment">// 进行去重</span><br>        <span class="hljs-comment">// 不用num[i] === nums[i + 1]的方式去重，是为了防止[-1, -1, 2] 这种数据被误删</span><br>        <span class="hljs-comment">// nums[i] === nums[i - 1]，在nums[i - 1]时已经把重复的数据算过了</span><br>        <span class="hljs-keyword">if</span> (nums[i] === nums[i - <span class="hljs-number">1</span>]) &#123;<br>            <span class="hljs-keyword">continue</span>;<br>        &#125;<br><br>        <span class="hljs-keyword">while</span> (left &lt; right) &#123;<br>            <span class="hljs-keyword">if</span> (nums[i] + nums[left] + nums[right] &lt; <span class="hljs-number">0</span>) &#123;<br>                left ++;<br>            &#125; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(nums[i] + nums[left] + nums[right] &gt; <span class="hljs-number">0</span>) &#123;<br>                right --;<br>            &#125; <span class="hljs-keyword">else</span> &#123;<br>                result.<span class="hljs-title function_">push</span>([nums[i], nums[left], nums[right]]);<br>                <span class="hljs-comment">// 对right和left进行去重</span><br>                <span class="hljs-comment">// eg： [-2,0,0,2,2]</span><br>                <span class="hljs-keyword">while</span>(left &lt; right &amp;&amp; nums[right - <span class="hljs-number">1</span>] === nums[right]) right --;<br>                <span class="hljs-keyword">while</span>(left &lt; right &amp;&amp; nums[left + <span class="hljs-number">1</span>] === nums[left]) left ++;<br><br>                right --;<br>                left ++;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">return</span> result;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+      </div>
+    </div>
+  </article>
+  <div class="post__foot">
+    
+    <div class="post-nav">
+  
+    <div class="post-nav-item-left"></div>
+  
+  <div class="vhr"></div>
+  
+    <a class="post-nav-item-right" href="/2024/02/25/hexo%E9%83%A8%E7%BD%B2github%E5%A4%B1%E8%B4%A5%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/">
+      <div class="text-align">
+        <span class="text-small">下一篇</span>
+        <svg t="1670570876164"
+             class="icon"
+             viewBox="0 0 1024 1024"
+             transform="scale(-1,-1)"
+             width="16"
+             height="16">
+          <path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="14596"/>
+        </svg>
+      </div>
+      hexo部署github失败的解决方法
+    </a>
+  
+</div>
+
+    
+      <div class="related-post">
+  <div class="related__head">
+  <a href="/tags/%E6%95%B0%E7%BB%84/" class="post-tag">#数组</a><a href="/tags/%E5%8F%8C%E6%8C%87%E9%92%88/" class="post-tag">#双指针</a>
+
+</div>
+  <div class="realated__body">
+    
+      <div class="null"><div class="null-item"><div class="null-title"><a href="\2024\02\25\盛最多水的容器\" title="盛最多水的容器" rel="bookmark">盛最多水的容器</a></div></div><div class="null-item"><div class="null-title"><a href="\2024\01\14\最长公共前缀\" title="最长公共前缀" rel="bookmark">最长公共前缀</a></div></div><div class="null-item"><div class="null-title"><a href="\2024\01\15\隐藏个人信息\" title="隐藏个人信息" rel="bookmark">隐藏个人信息</a></div></div></div>
+    
+  </div>
+</div>
+
+    
+    
+  </div>
+
+    </div>
+    <div class="foot">
+      <div class="foot-inner">
+        <div class="foot__head">
+          
+            <div class="foot-line">
+              
+                <div class="matts">知</div>
+              
+                <div class="matts">行</div>
+              
+                <div class="matts">合</div>
+              
+                <div class="matts">一</div>
+              
+            </div>
+          
+        </div>
+        <div class="foot__body">
+          
+            <div class="foot-item">
+              <div class="foot-item__head">朋友</div>
+              <div class="foot-item__body">
+                
+                  <div class="text">
+                    <img alt="link" height="20px" width="20px" src="/images/icon/icon-link.svg"/>
+                    <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">Theme Tranquility</a>
+                  </div>
+                
+                <div class="text">
+                  <img alt="link" height="20px" width="20px" src="/images/icon/icon-link+.svg"/>
+                  <a class="foot-link"
+                     href="mailto:freyawang09@163.com?subject=%E7%94%B3%E8%AF%B7%20Hozen.site%20%E7%9A%84%E5%8F%8B%E9%93%BE%E4%BD%8D%E7%BD%AE">
+                  申请友链</a>
+                </div>
+              </div>
+            </div>
+          
+          
+            <div class="foot-item">
+              <div class="foot-item__head">账号</div>
+              <div class="foot-item__body">
+                
+                  <div class="text">
+                    <img alt="link" height="20px" width="20px" src="/images/logo-github.svg"/>
+                    <a class="foot-link" target="_blank" rel="noopener" href="https://github.com/freyawang09">freyawang09</a>
+                  </div>
+                
+              </div>
+            </div>
+          
+          <div class="foot-item">
+            <div class="foot-item__head">联系</div>
+            <div class="foot-item__body">
+              <div class="text">
+                <img alt="link" height="20px" width="20px" src="/images/icon/icon-email.svg"/>
+                <a class="foot-link" href="mailto:freyawang09@163.com">freyawang09@163.com</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="copyright">
+          <a href="https://freyawang09.github.io">Freya的学习笔记</a> &nbsp;|&nbsp;由&nbsp;<a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>&nbsp;及&nbsp;
+          <svg width="20" height="20" viewBox="0 0 725 725">
+            <path fill-rule="evenodd" fill="rgb(221, 221, 221)" d="M145.870,236.632 L396.955,103.578 L431.292,419.44 L156.600,522.53 L145.870,236.632 Z"/>
+            <path fill-rule="evenodd" fill="rgb(159, 159, 159)" d="M396.955,103.578 L564.345,234.486 L611.558,513.469 L431.292,419.44 L396.955,103.578 Z"/>
+            <path fill-rule="evenodd" fill="rgb(0, 0, 0)" d="M431.292,419.44 L611.558,513.469 L358.327,595.18 L156.600,522.53 L431.292,419.44 Z"/>
+          </svg>
+          <a target="_blank" rel="noopener" href="https://github.com/hooozen/hexo-theme-tranquility">致远</a>&nbsp;驱动
+        </div>
+      </div>
+    </div>
+    
+    
+  
+
+  </body>
+</html>
